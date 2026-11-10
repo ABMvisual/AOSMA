@@ -44,7 +44,7 @@
     main();
   }
 
-  var CSS = "\n  .abm-ui, .abm-ui * { box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }\n  .abm-btn {\n    border: 0; cursor: pointer; border-radius: 22px; padding: 10px 16px; text-decoration: none;\n    font-size: 14px; font-weight: bold; color: #fff; background: rgba(0,0,0,0.72);\n    box-shadow: 0 4px 14px rgba(0,0,0,0.45); display: inline-flex; align-items: center; gap: 7px;\n  }\n  .abm-btn:hover, .abm-btn:focus-visible { background: rgba(0,0,0,0.9); outline: 2px solid #019bde; outline-offset: 1px; }\n  .abm-btn.abm-primary { background: #019bde; }\n  .abm-btn.abm-primary:hover, .abm-btn.abm-primary:focus-visible { background: #0088c4; }\n  .abm-btn.abm-light { background: #eef3f6; color: #1a1a1a; box-shadow: none; }\n  .abm-btn.abm-light:hover, .abm-btn.abm-light:focus-visible { background: #dde7ee; }\n  .abm-btn svg { width: 16px; height: 16px; flex: none; }\n\n  /* ---------- 4. Quick links bar: top centre, under the banner, on every screen ---------- */\n  #abm-quicklinks {\n    position: fixed; left: 50%; top: 60px; transform: translateX(-50%);\n    z-index: 9999990; display: flex; gap: 8px;\n  }\n\n  /* ---------- Cards that tuck to the right edge ---------- */\n  .abm-card {\n    position: fixed; right: 20px; z-index: 9999992; color: #fff;\n    background: rgba(0,0,0,0.75); border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.5);\n    padding: 12px 14px 12px 40px;\n    transition: transform .45s ease, opacity .5s ease;\n    opacity: 0; pointer-events: none;\n  }\n  .abm-card.abm-show { opacity: 1; pointer-events: auto; }\n  .abm-card.abm-tucked { transform: translateX(calc(100% - 30px + 20px)); }\n  .abm-tab {\n    position: absolute; left: 0; top: 0; bottom: 0; width: 30px; border: 0; cursor: pointer;\n    background: rgba(1,155,222,0.9); color: #fff; border-radius: 12px 0 0 12px;\n    display: flex; align-items: center; justify-content: center; padding: 0;\n  }\n  .abm-tab svg { width: 16px; height: 16px; transition: transform .45s ease; }\n  .abm-card.abm-tucked .abm-tab svg { transform: rotate(180deg); }\n  .abm-card-title { font-size: 15px; font-weight: bold; margin: 0 0 8px; }\n\n  /* ---------- 3. Quick facts banner ----------\n     Full width across the top, from the top of the screen down to the\n     bottom of MPskin's logo and menu. Sits above the tour but behind\n     MPskin's own buttons, and ignores clicks so nothing is blocked. */\n  #abm-facts {\n    position: fixed; top: 0; left: 0; right: 0; height: 44px;\n    display: flex; align-items: center; justify-content: center; gap: 14px;\n    padding: 0 12px; background: #019bde; color: #fff;\n    pointer-events: none; white-space: nowrap; overflow: hidden;\n  }\n  #abm-facts .abm-facts-name { font-weight: 900; letter-spacing: .04em; text-transform: uppercase; overflow: hidden; text-overflow: ellipsis; }\n  #abm-facts .abm-facts-list { display: flex; gap: .8em; opacity: .95; }\n\n  /* ---------- 2. Room info card (where the miniplayer was) ---------- */\n  #abm-info { top: 110px; width: 300px; }\n  #abm-info .abm-info-actions { display: flex; flex-direction: column; gap: 8px; }\n  #abm-info .abm-btn { justify-content: center; width: 100%; box-shadow: none; }\n  #abm-info .abm-btn:not(.abm-primary) { background: rgba(255,255,255,0.14); }\n  #abm-info .abm-phone { font-size: 13px; opacity: .85; margin: 8px 0 0; text-align: center; }\n  #abm-info .abm-phone a { color: #fff; }\n\n  /* ---------- 1. Miniplayer ---------- */\n  #abm-mini {\n    position: fixed; bottom: 80px; right: 20px; width: clamp(220px, 26vw, 380px);\n    padding: clamp(32px, 3.2vw, 44px) 8px 8px; z-index: 9999995; display: none;\n    background: rgba(0,0,0,0.65); border-radius: 12px;\n    box-shadow: 0 15px 35px rgba(0,0,0,0.8); transition: opacity .5s ease, transform .5s ease;\n  }\n  #abm-mini.abm-fade { opacity: 0; }\n  #abm-mini-head {\n    position: absolute; top: 7px; left: 0; width: 100%; text-align: center; color: #fff;\n    font-size: clamp(16px, 1.8vw, 24px); font-weight: 900; letter-spacing: 2px; line-height: 1.2; text-transform: uppercase; pointer-events: none;\n  }\n  #abm-mini-box { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 6px; overflow: hidden; background: #000; }\n  #abm-mini-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #000; }\n  #abm-mini-video::cue { font-family: Arial, Helvetica, sans-serif; font-size: 15px; background: rgba(0,0,0,0.75); color: #fff; }\n  #abm-mini.abm-expanded #abm-mini-video::cue { font-size: 26px; }\n  #abm-mini-overlay {\n    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;\n    cursor: pointer; z-index: 2; background: transparent; border: 0; padding: 0;\n  }\n  #abm-mini-overlay span {\n    background: #019bde; color: #fff; padding: 7px 16px; border-radius: 20px; white-space: nowrap;\n    font-size: 13px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.5);\n  }\n  #abm-mini-close {\n    position: absolute; top: 3px; right: 10px; z-index: 3; background: none; border: 0;\n    color: #fff; font-size: 30px; font-weight: bold; cursor: pointer; line-height: 1;\n    text-shadow: 0 0 10px rgba(0,0,0,0.8);\n  }\n  #abm-mini.abm-expanded {\n    inset: 0; width: 100vw; height: 100vh; padding: 0; border-radius: 0; background: #000; box-shadow: none;\n  }\n  #abm-mini.abm-expanded #abm-mini-head { display: none; }\n  #abm-mini.abm-expanded #abm-mini-box { height: 100%; aspect-ratio: auto; border-radius: 0; }\n  #abm-mini.abm-expanded #abm-mini-close { top: 15px; right: 20px; font-size: 40px; }\n\n  /* ---------- 5. Enquiry form ---------- */\n  #abm-enq-backdrop {\n    position: fixed; inset: 0; z-index: 9999998; background: rgba(0,0,0,0.55);\n    display: none; align-items: center; justify-content: center; padding: 16px;\n  }\n  #abm-enq-backdrop.abm-open { display: flex; }\n  #abm-enq {\n    width: 100%; max-width: 440px; max-height: 92vh; overflow-y: auto;\n    background: #fff; color: #1a1a1a; border-radius: 14px; padding: 22px 22px 18px;\n    box-shadow: 0 20px 50px rgba(0,0,0,0.5); position: relative;\n  }\n  #abm-enq h2 { font-size: 20px; margin: 0 26px 4px 0; line-height: 1.25; }\n  #abm-enq .abm-sub { font-size: 14px; color: #555; margin: 0 0 12px; }\n  #abm-enq-close { position: absolute; top: 10px; right: 12px; background: none; border: 0; font-size: 28px; cursor: pointer; color: #555; line-height: 1; }\n  #abm-enq .abm-top-actions { display: flex; gap: 8px; margin-bottom: 14px; }\n  #abm-enq .abm-top-actions .abm-btn { flex: 1; justify-content: center; }\n  #abm-enq .abm-or { text-align: center; font-size: 12px; color: #777; text-transform: uppercase; letter-spacing: .08em; margin: 0 0 12px; }\n  #abm-enq label { display: block; font-size: 13px; font-weight: bold; margin: 0 0 4px; }\n  #abm-enq input, #abm-enq select, #abm-enq textarea {\n    width: 100%; font-size: 15px; padding: 9px 10px; border: 1px solid #c9c9c9; border-radius: 8px;\n    margin: 0 0 10px; background: #fff; color: #1a1a1a;\n  }\n  #abm-enq textarea { min-height: 70px; resize: vertical; }\n  #abm-enq .abm-row { display: flex; gap: 10px; }\n  #abm-enq .abm-row > div { flex: 1; min-width: 0; }\n  #abm-enq .abm-submit { width: 100%; justify-content: center; margin-top: 4px; }\n  #abm-enq .abm-call { font-size: 14px; text-align: center; margin: 12px 0 0; }\n  #abm-enq .abm-call a { color: #0077aa; font-weight: bold; }\n  #abm-enq .abm-note { font-size: 11px; color: #777; margin: 8px 0 0; }\n  #abm-enq .abm-msg { font-size: 15px; margin: 12px 0 4px; }\n  #abm-enq .abm-credit { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 14px 0 0; padding-top: 12px; border-top: 1px solid #eee; color: #777; font-size: 11px; text-decoration: none; }\n  #abm-enq .abm-credit img { height: 20px; width: auto; display: block; }\n\n  /* ---------- share panel ---------- */\n  #abm-share {\n    position: fixed; z-index: 99999999; display: none; flex-direction: column; min-width: 190px; max-height: calc(100vh - 16px); overflow-y: auto;\n    background: #fff; color: #1a1a1a; border-radius: 12px; padding: 6px; box-shadow: 0 12px 34px rgba(0,0,0,0.45);\n  }\n  #abm-share.abm-open { display: flex; }\n  .abm-share-item {\n    display: flex; align-items: center; gap: 10px; padding: 9px 10px; border: 0; background: none;\n    border-radius: 8px; color: #1a1a1a; text-decoration: none; font-size: 14px; cursor: pointer; text-align: left; width: 100%;\n  }\n  .abm-share-item:hover, .abm-share-item:focus-visible { background: #eef3f6; outline: none; }\n  .abm-share-item svg { width: 18px; height: 18px; flex: none; }\n  .abm-share-copy { font-weight: bold; border-bottom: 1px solid #e5e5e5; border-radius: 8px 8px 0 0; margin-bottom: 2px; }\n\n  /* ---------- guided tour: everything slides off ---------- */\n  .abm-ui.abm-slide { transition: transform .5s ease, opacity .5s ease; }\n  body.abm-away #abm-quicklinks { transform: translate(-50%, -400%) !important; opacity: 0; pointer-events: none; }\n  body.abm-away #abm-facts { transform: translateY(-110%) !important; }\n  body.abm-away #abm-mini, body.abm-away #abm-info { transform: translateX(120%) !important; opacity: 0; pointer-events: none; }\n  #abm-debug {\n    position: fixed; left: 8px; top: 60px; width: min(420px, 92vw); max-height: 45vh; overflow: auto; z-index: 99999999;\n    background: rgba(0,0,0,.85); color: #9f9; font: 11px/1.35 monospace; padding: 8px; border-radius: 8px; white-space: pre-wrap; word-break: break-all;\n  }\n\n  /* ---------- toast ---------- */\n  #abm-toast {\n    position: fixed; left: 50%; bottom: 76px; transform: translateX(-50%); z-index: 9999999;\n    background: #1a1a1a; color: #fff; padding: 10px 16px; border-radius: 20px; font-size: 14px;\n    opacity: 0; transition: opacity .25s; pointer-events: none;\n  }\n  #abm-toast.abm-show { opacity: 1; }\n\n  @media (max-width: 600px) {\n    /* phones: Matterport's own buttons run along the whole bottom edge, so lift everything above them */\n    #abm-mini { bottom: 146px; right: 10px; }\n    #abm-mini-head { letter-spacing: 1px; }\n    #abm-info { width: 230px; right: 10px; }\n    .abm-card.abm-tucked { transform: translateX(calc(100% - 30px + 10px)); }\n    #abm-quicklinks { gap: 6px; }\n    #abm-toast { bottom: 140px; }\n    .abm-btn { padding: 9px 12px; font-size: 13px; }\n  }\n";
+  var CSS = "\n  .abm-ui, .abm-ui * { box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }\n  .abm-btn {\n    border: 0; cursor: pointer; border-radius: 22px; padding: 10px 16px; text-decoration: none;\n    font-size: 14px; font-weight: bold; color: #fff; background: rgba(0,0,0,0.72);\n    box-shadow: 0 4px 14px rgba(0,0,0,0.45); display: inline-flex; align-items: center; gap: 7px;\n  }\n  .abm-btn:hover, .abm-btn:focus-visible { background: rgba(0,0,0,0.9); outline: 2px solid #019bde; outline-offset: 1px; }\n  .abm-btn.abm-primary { background: #019bde; }\n  .abm-btn.abm-primary:hover, .abm-btn.abm-primary:focus-visible { background: #0088c4; }\n  .abm-btn.abm-light { background: #eef3f6; color: #1a1a1a; box-shadow: none; }\n  .abm-btn.abm-light:hover, .abm-btn.abm-light:focus-visible { background: #dde7ee; }\n  .abm-btn svg { width: 16px; height: 16px; flex: none; }\n\n  /* ---------- 4. Quick links bar: top centre, under the banner, on every screen ---------- */\n  #abm-quicklinks {\n    position: fixed; left: 50%; top: 60px; transform: translateX(-50%);\n    z-index: 9999990; display: flex; gap: 8px;\n  }\n\n  /* ---------- Cards that tuck to the right edge ---------- */\n  .abm-card {\n    position: fixed; right: 20px; z-index: 9999992; color: #fff;\n    background: rgba(0,0,0,0.75); border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.5);\n    padding: 12px 14px 12px 40px;\n    transition: transform .45s ease, opacity .5s ease;\n    opacity: 0; pointer-events: none;\n  }\n  .abm-card.abm-show { opacity: 1; pointer-events: auto; }\n  .abm-card.abm-tucked { transform: translateX(calc(100% - 30px + 20px)); }\n  .abm-tab {\n    position: absolute; left: 0; top: 0; bottom: 0; width: 30px; border: 0; cursor: pointer;\n    background: rgba(1,155,222,0.9); color: #fff; border-radius: 12px 0 0 12px;\n    display: flex; align-items: center; justify-content: center; padding: 0;\n  }\n  .abm-tab svg { width: 16px; height: 16px; transition: transform .45s ease; }\n  .abm-card.abm-tucked .abm-tab svg { transform: rotate(180deg); }\n  .abm-card-title { font-size: 15px; font-weight: bold; margin: 0 0 8px; }\n\n  /* ---------- 3. Quick facts banner ----------\n     Full width across the top, from the top of the screen down to the\n     bottom of MPskin's logo and menu. Sits above the tour but behind\n     MPskin's own buttons, and ignores clicks so nothing is blocked. */\n  #abm-facts {\n    position: fixed; top: 0; left: 0; right: 0; height: 44px;\n    display: flex; align-items: center; justify-content: center; gap: 14px;\n    padding: 0 12px; background: #019bde; color: #fff;\n    pointer-events: none; white-space: nowrap; overflow: hidden;\n  }\n  #abm-facts .abm-facts-name { font-weight: 900; letter-spacing: .04em; text-transform: uppercase; overflow: hidden; text-overflow: ellipsis; }\n  #abm-facts .abm-facts-list { display: flex; gap: .8em; opacity: .95; }\n\n  /* ---------- 2. Room info card (where the miniplayer was) ---------- */\n  #abm-info { top: 110px; width: 300px; }\n  #abm-info .abm-info-actions { display: flex; flex-direction: column; gap: 8px; }\n  #abm-info .abm-btn { justify-content: center; width: 100%; box-shadow: none; }\n  #abm-info .abm-btn:not(.abm-primary) { background: rgba(255,255,255,0.14); }\n  #abm-info .abm-phone { font-size: 13px; opacity: .85; margin: 8px 0 0; text-align: center; }\n  #abm-info .abm-phone a { color: #fff; }\n\n  /* ---------- 1. Miniplayer ---------- */\n  #abm-mini {\n    position: fixed; bottom: 80px; right: 20px; width: clamp(220px, 26vw, 380px);\n    padding: clamp(32px, 3.2vw, 44px) 8px 8px; z-index: 9999995; display: none;\n    background: rgba(0,0,0,0.65); border-radius: 12px;\n    box-shadow: 0 15px 35px rgba(0,0,0,0.8); transition: opacity .5s ease, transform .5s ease;\n  }\n  #abm-mini.abm-fade { opacity: 0; }\n  #abm-mini-head {\n    position: absolute; top: 7px; left: 0; width: 100%; text-align: center; color: #fff;\n    font-size: clamp(16px, 1.8vw, 24px); font-weight: 900; letter-spacing: 2px; line-height: 1.2; text-transform: uppercase; pointer-events: none;\n  }\n  #abm-mini-box { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 6px; overflow: hidden; background: #000; }\n  #abm-mini-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #000; }\n  #abm-mini-video::cue { font-family: Arial, Helvetica, sans-serif; font-size: 15px; background: rgba(0,0,0,0.75); color: #fff; }\n  #abm-mini.abm-expanded #abm-mini-video::cue { font-size: 26px; }\n  #abm-mini-overlay {\n    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;\n    cursor: pointer; z-index: 2; background: transparent; border: 0; padding: 0;\n  }\n  #abm-mini-overlay span {\n    background: #019bde; color: #fff; padding: 7px 16px; border-radius: 20px; white-space: nowrap;\n    font-size: 13px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.5);\n  }\n  #abm-mini-close {\n    position: absolute; top: 3px; right: 10px; z-index: 3; background: none; border: 0;\n    color: #fff; font-size: 30px; font-weight: bold; cursor: pointer; line-height: 1;\n    text-shadow: 0 0 10px rgba(0,0,0,0.8);\n  }\n  #abm-mini.abm-expanded {\n    inset: 0; width: 100vw; height: 100vh; padding: 0; border-radius: 0; background: #000; box-shadow: none;\n  }\n  #abm-mini.abm-expanded #abm-mini-head { display: none; }\n  #abm-mini.abm-expanded #abm-mini-box { height: 100%; aspect-ratio: auto; border-radius: 0; }\n  #abm-mini.abm-expanded #abm-mini-close { top: 15px; right: 20px; font-size: 40px; }\n\n  /* ---------- 5. Enquiry form ---------- */\n  #abm-enq-backdrop {\n    position: fixed; inset: 0; z-index: 9999998; background: rgba(0,0,0,0.55);\n    display: none; align-items: center; justify-content: center; padding: 16px;\n  }\n  #abm-enq-backdrop.abm-open { display: flex; }\n  #abm-enq {\n    width: 100%; max-width: 440px; max-height: 92vh; overflow-y: auto;\n    background: #fff; color: #1a1a1a; border-radius: 14px; padding: 22px 22px 18px;\n    box-shadow: 0 20px 50px rgba(0,0,0,0.5); position: relative;\n  }\n  #abm-enq h2 { font-size: 20px; margin: 0 26px 4px 0; line-height: 1.25; }\n  #abm-enq .abm-sub { font-size: 14px; color: #555; margin: 0 0 12px; }\n  #abm-enq-close { position: absolute; top: 10px; right: 12px; background: none; border: 0; font-size: 28px; cursor: pointer; color: #555; line-height: 1; }\n  #abm-enq .abm-top-actions { display: flex; gap: 8px; margin-bottom: 14px; }\n  #abm-enq .abm-top-actions .abm-btn { flex: 1; justify-content: center; }\n  #abm-enq .abm-or { text-align: center; font-size: 12px; color: #777; text-transform: uppercase; letter-spacing: .08em; margin: 0 0 12px; }\n  #abm-enq label { display: block; font-size: 13px; font-weight: bold; margin: 0 0 4px; }\n  #abm-enq input, #abm-enq select, #abm-enq textarea {\n    width: 100%; font-size: 15px; padding: 9px 10px; border: 1px solid #c9c9c9; border-radius: 8px;\n    margin: 0 0 10px; background: #fff; color: #1a1a1a;\n  }\n  #abm-enq textarea { min-height: 70px; resize: vertical; }\n  #abm-enq .abm-row { display: flex; gap: 10px; }\n  #abm-enq .abm-row > div { flex: 1; min-width: 0; }\n  #abm-enq .abm-group { font-size: 12px; font-weight: bold; color: #019bde; text-transform: uppercase; letter-spacing: .08em; margin: 4px 0 8px; }\n  #abm-enq .abm-hint { font-size: 12px; color: #666; margin: -2px 0 6px; }\n  #abm-enq .abm-hint a { color: #0077aa; }\n  #abm-enq details.abm-more { margin: 0 0 10px; border: 1px solid #e3e6ea; border-radius: 8px; padding: 8px 10px 0; }\n  #abm-enq details.abm-more summary { cursor: pointer; font-size: 14px; font-weight: bold; color: #0077aa; margin-bottom: 8px; }\n  #abm-enq .abm-check { display: flex; gap: 8px; align-items: flex-start; font-weight: normal; font-size: 13px; margin: 2px 0 12px; }\n  #abm-enq .abm-check input { width: auto; margin: 2px 0 0; }\n  #abm-enq .abm-submit { width: 100%; justify-content: center; margin-top: 4px; }\n  #abm-enq .abm-call { font-size: 14px; text-align: center; margin: 12px 0 0; }\n  #abm-enq .abm-call a { color: #0077aa; font-weight: bold; }\n  #abm-enq .abm-note { font-size: 11px; color: #777; margin: 8px 0 0; }\n  #abm-enq .abm-msg { font-size: 15px; margin: 12px 0 4px; }\n  #abm-enq .abm-credit { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 14px 0 0; padding-top: 12px; border-top: 1px solid #eee; color: #777; font-size: 11px; text-decoration: none; }\n  #abm-enq .abm-credit img { height: 20px; width: auto; display: block; }\n\n  /* ---------- share panel ---------- */\n  #abm-share {\n    position: fixed; z-index: 99999999; display: none; flex-direction: column; min-width: 190px; max-height: calc(100vh - 16px); overflow-y: auto;\n    background: #fff; color: #1a1a1a; border-radius: 12px; padding: 6px; box-shadow: 0 12px 34px rgba(0,0,0,0.45);\n  }\n  #abm-share.abm-open { display: flex; }\n  .abm-share-item {\n    display: flex; align-items: center; gap: 10px; padding: 9px 10px; border: 0; background: none;\n    border-radius: 8px; color: #1a1a1a; text-decoration: none; font-size: 14px; cursor: pointer; text-align: left; width: 100%;\n  }\n  .abm-share-item:hover, .abm-share-item:focus-visible { background: #eef3f6; outline: none; }\n  .abm-share-item svg { width: 18px; height: 18px; flex: none; }\n  .abm-share-copy { font-weight: bold; border-bottom: 1px solid #e5e5e5; border-radius: 8px 8px 0 0; margin-bottom: 2px; }\n\n  /* ---------- guided tour: everything slides off ---------- */\n  .abm-ui.abm-slide { transition: transform .5s ease, opacity .5s ease; }\n  body.abm-menu-open #abm-quicklinks, body.abm-menu-open #abm-info, body.abm-menu-open #abm-mini { opacity: 0 !important; pointer-events: none !important; }\n  body.abm-away #abm-quicklinks { transform: translate(-50%, -400%) !important; opacity: 0; pointer-events: none; }\n  body.abm-away #abm-facts { transform: translateY(-110%) !important; }\n  body.abm-away #abm-mini, body.abm-away #abm-info { transform: translateX(120%) !important; opacity: 0; pointer-events: none; }\n  #abm-debug {\n    position: fixed; left: 8px; top: 60px; width: min(420px, 92vw); max-height: 45vh; overflow: auto; z-index: 99999999;\n    background: rgba(0,0,0,.85); color: #9f9; font: 11px/1.35 monospace; padding: 8px; border-radius: 8px; white-space: pre-wrap; word-break: break-all;\n  }\n\n  /* ---------- toast ---------- */\n  #abm-toast {\n    position: fixed; left: 50%; bottom: 76px; transform: translateX(-50%); z-index: 9999999;\n    background: #1a1a1a; color: #fff; padding: 10px 16px; border-radius: 20px; font-size: 14px;\n    opacity: 0; transition: opacity .25s; pointer-events: none;\n  }\n  #abm-toast.abm-show { opacity: 1; }\n\n  @media (max-width: 600px) {\n    /* phones: Matterport's own buttons run along the whole bottom edge, so lift everything above them */\n    #abm-mini { bottom: 146px; right: 10px; }\n    #abm-mini-head { letter-spacing: 1px; }\n    #abm-info { width: 230px; right: 10px; }\n    .abm-card.abm-tucked { transform: translateX(calc(100% - 30px + 10px)); }\n    #abm-quicklinks { gap: 6px; }\n    #abm-toast { bottom: 140px; }\n    .abm-btn { padding: 9px 12px; font-size: 13px; }\n  }\n";
 
   function main() {
   var S = window.ABM_SPACE || {};
@@ -251,7 +251,18 @@
   }
   function sizeBanner() {
     var bn = S.banner || {}, g = measureTopUi(), w = window.innerWidth;
-    var h = Math.round(g.bottom) || bn.fallbackHeight || 44;
+    // Match the MENU button's height exactly, so the banner lines up with the menu and logo.
+    var menuEl = null, all = document.body.getElementsByTagName('*');
+    for (var i = 0; i < all.length; i++) {
+      var m = all[i];
+      if (m.closest && m.closest('.abm-ui')) continue;
+      if (/^\s*menu\s*$/i.test(m.textContent || '') && m.getBoundingClientRect().top < 20 && m.getBoundingClientRect().height > 0) { menuEl = m; }
+    }
+    if (menuEl) {
+      while (menuEl.parentNode && menuEl.parentNode !== document.body && /^\s*menu\s*$/i.test(menuEl.parentNode.textContent || '') && menuEl.parentNode.getBoundingClientRect().bottom < 90) menuEl = menuEl.parentNode;
+    }
+    var mb = menuEl ? Math.round(menuEl.getBoundingClientRect().bottom) : 0;
+    var h = mb >= 24 ? mb : Math.min(Math.round(g.bottom) || 0, 60) || bn.fallbackHeight || 44;
     var fs = Math.max(11, Math.min(18, Math.round(h * 0.36)));
     factsBar.style.height = h + 'px';
     factsBar.style.fontSize = fs + 'px';
@@ -322,20 +333,35 @@
     } else input = el('input', { id: id, name: id, type: type });
     if (required) input.required = true;
     if (type === 'email') input.autocomplete = 'email';
-    if (id === 'abm-f-name') input.autocomplete = 'name';
-    if (id === 'abm-f-phone') input.autocomplete = 'tel';
+    var AC = { 'abm-f-first': 'given-name', 'abm-f-last': 'family-name', 'abm-f-company': 'organization', 'abm-f-phone': 'tel' };
+    if (AC[id]) input.autocomplete = AC[id];
     if (type === 'number') input.min = '1';
-    return el('div', null, [el('label', { 'for': id, text: label + (required ? ' *' : '') }), input]);
+    var o = (type === 'select' ? null : extra) || {};
+    if (o.placeholder) input.placeholder = o.placeholder;
+    return el('div', null, [el('label', { 'for': id, text: label + (required ? ' *' : '') }), o.hint ? el('p', { 'class': 'abm-hint', html: o.hint }) : null, input]);
   }
   var enq = S.enquiry || {};
-  var LEAD_SOURCE = 'This lead came from the Adelaide Oval 3D virtual tours (' + (S.name || 'event space') + '), created by ABM visual, Adelaide’s own spatial data and 3D digital twins provider. abmvisual.com';
+  var LEAD_SOURCE = 'This lead came from the Adelaide Oval 3D virtual tours (' + (S.name || 'event space') + '), created by ABM visual, Adelaide\u2019s own spatial data and 3D digital twins provider. abmvisual.com';
   var form = el('form', { novalidate: 'novalidate' }, [
-    field('abm-f-name', 'Name', 'text', true),
-    field('abm-f-email', 'Email', 'email', true),
-    field('abm-f-phone', 'Phone', 'tel', false),
-    el('div', { 'class': 'abm-row' }, [field('abm-f-date', 'Event date', 'date', false), field('abm-f-guests', 'Guests', 'number', false)]),
-    field('abm-f-type', 'Event type', 'select', false, ['', 'Corporate function', 'Conference or meeting', 'Gala dinner', 'Cocktail party', 'Wedding', 'Birthday or celebration', 'Other']),
-    field('abm-f-msg', 'Anything else we should know?', 'textarea', false),
+    el('p', { 'class': 'abm-group', text: 'Contact details' }),
+    el('div', { 'class': 'abm-row' }, [field('abm-f-first', 'First name', 'text', true), field('abm-f-last', 'Last name', 'text', false)]),
+    field('abm-f-company', 'Company', 'text', false),
+    el('div', { 'class': 'abm-row' }, [field('abm-f-email', 'Email', 'email', true), field('abm-f-phone', 'Phone', 'tel', true)]),
+    el('p', { 'class': 'abm-group', text: 'Event details' }),
+    field('abm-f-type', 'What type of event are you looking to hold?', 'text', false, { placeholder: 'For example, a conference, private event or gala dinner' }),
+    el('div', { 'class': 'abm-row' }, [field('abm-f-date', 'Event date(s)', 'text', false, { placeholder: 'e.g. 14 March 2027' }), field('abm-f-guests', 'Number of guests', 'number', false)]),
+    el('div', { 'class': 'abm-row' }, [
+      field('abm-f-timing', 'Approximate timings', 'select', false, ['', 'Morning', 'Lunch', 'Afternoon', 'Evening', 'All Day', 'Multi-Day', 'I\'m Not Sure']),
+      field('abm-f-setup', 'Room set-up', 'select', false, ['', 'Banquet', 'Boardroom', 'Cabaret', 'Cocktail', 'Theatre', 'I\'m Not Sure'])
+    ]),
+    el('details', { 'class': 'abm-more' }, [
+      el('summary', { text: 'More details (optional)' }),
+      field('abm-f-catering', 'What catering would you like for the event?', 'textarea', false, { hint: 'See the menus at <a href="https://www.adelaideoval.com.au/functions/" target="_blank" rel="noopener">adelaideoval.com.au/functions</a>. For example, a three course dinner with a beverage package.' }),
+      field('abm-f-av', 'Do you have any audio or visual requirements?', 'textarea', false, { hint: 'If yes, tell us what you would like to create. Our in-house AV provider, Scene Change, will be in touch.' }),
+      field('abm-f-accom', 'Do you require accommodation at the Oval Hotel?', 'select', false, ['', 'Yes', 'No']),
+      el('div', { id: 'abm-accom-wrap', style: 'display:none' }, [field('abm-f-rooms', 'Please specify your room requirements', 'text', false)])
+    ]),
+    el('label', { 'class': 'abm-check' }, [el('input', { type: 'checkbox', id: 'abm-f-news' }), el('span', { text: 'Stay up to date with the latest Adelaide Oval news and offers.' })]),
     el('button', { type: 'submit', 'class': 'abm-btn abm-primary abm-submit', text: 'Send enquiry' }),
     enq.phone ? el('p', { 'class': 'abm-call' }, [document.createTextNode('Or call our functions team on '), el('a', { href: 'tel:' + enq.phone.replace(/[^0-9+]/g, ''), text: enq.phone })]) : null,
     el('p', { 'class': 'abm-note', text: 'Your details go to the Adelaide Oval events team and are only used to respond to this enquiry.' }),
@@ -346,6 +372,19 @@
   ]);
   formWrap.appendChild(form);
   box.appendChild(formWrap);
+  // Remember the visitor's details in this tab only, so moving to another room doesn't mean retyping.
+  // Nothing is kept once the tab closes. The message box is never remembered.
+  var KEEP = ['abm-f-first', 'abm-f-last', 'abm-f-company', 'abm-f-email', 'abm-f-phone', 'abm-f-type', 'abm-f-date', 'abm-f-guests', 'abm-f-timing', 'abm-f-setup'];
+  var accomSel = form.querySelector('#abm-f-accom');
+  accomSel.addEventListener('change', function () { document.getElementById('abm-accom-wrap').style.display = accomSel.value === 'Yes' ? '' : 'none'; });
+  var kept = tabGet('abm_enq') || {};
+  KEEP.forEach(function (id) {
+    var f = form.querySelector('#' + id), k = id.replace('abm-f-', '');
+    if (!f) return;
+    if (kept[k]) f.value = kept[k];
+    f.addEventListener('input', function () { var d = tabGet('abm_enq') || {}; d[k] = f.value; tabSet('abm_enq', d); });
+    f.addEventListener('change', function () { var d = tabGet('abm_enq') || {}; d[k] = f.value; tabSet('abm_enq', d); });
+  });
   backdrop.appendChild(box);
 
   var lastFocus = null;
@@ -367,32 +406,48 @@
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    var v = function (id) { return (form.querySelector('#' + id).value || '').trim(); };
+    var v = function (id) { var f = form.querySelector('#' + id); return f ? (f.value || '').trim() : ''; };
     var data = {
-      space: S.name || '', name: v('abm-f-name'), email: v('abm-f-email'), phone: v('abm-f-phone'),
-      date: v('abm-f-date'), guests: v('abm-f-guests'), type: v('abm-f-type'), message: v('abm-f-msg'),
+      space: S.name || '', firstName: v('abm-f-first'), lastName: v('abm-f-last'), company: v('abm-f-company'),
+      email: v('abm-f-email'), phone: v('abm-f-phone'),
+      type: v('abm-f-type'), date: v('abm-f-date'), timing: v('abm-f-timing'), guests: v('abm-f-guests'), setup: v('abm-f-setup'),
+      catering: v('abm-f-catering'), av: v('abm-f-av'), accommodation: v('abm-f-accom'), roomRequirements: v('abm-f-rooms'),
+      heardAbout: 'Adelaide Oval 3D virtual tours', newsletter: form.querySelector('#abm-f-news').checked ? 'Yes' : 'No',
       page: location.href,
       source: LEAD_SOURCE
     };
-    if (!data.name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
-      say('Please add your name and a valid email');
-      (data.name ? form.querySelector('#abm-f-email') : form.querySelector('#abm-f-name')).focus();
+    data.name = (data.firstName + ' ' + data.lastName).trim();
+    var bad = !data.firstName ? 'abm-f-first' : !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email) ? 'abm-f-email' : data.phone.replace(/[^0-9]/g, '').length < 8 ? 'abm-f-phone' : '';
+    if (bad) {
+      say('Please add your first name, a valid email, and a phone number');
+      form.querySelector('#' + bad).focus();
+      if (form.querySelector('#' + bad).closest('details')) form.querySelector('#' + bad).closest('details').open = true;
       return;
     }
     var done = function (viaEmail) {
-      track('generate_lead', { method: viaEmail ? 'email' : 'form', event_type: data.type || 'not set', guests: data.guests || 'not set' });
+      track('generate_lead', { method: viaEmail ? 'email' : 'form', event_type: data.type || 'not set', guests: data.guests || 'not set', room_setup: data.setup || 'not set' });
       formWrap.innerHTML = '';
       formWrap.appendChild(el('p', { 'class': 'abm-msg', text: viaEmail
         ? 'Your email app has opened with your enquiry ready to send. Press send there and our events team will be in touch.'
-        : 'Thanks ' + data.name + ', your enquiry has been sent. Our events team will be in touch soon.' }));
+        : 'Thanks ' + data.firstName + ', your enquiry has been sent. Our events team will be in touch soon.' }));
+      var after = el('button', { type: 'button', 'class': 'abm-btn abm-primary', style: 'width:100%;justify-content:center;margin-top:14px', html: SPACES_ICON + 'View other event spaces' });
+      after.addEventListener('click', function () { closeEnquiry(); openSpaces(); track('abm_thanks_spaces'); });
+      formWrap.appendChild(after);
+      var sb = shareButton('abm-light', 'thanks', 'Share this room');
+      sb.style.cssText = 'width:100%;justify-content:center;margin-top:10px';
+      formWrap.appendChild(sb);
     };
     if (enq.endpoint) {
       fetch(enq.endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(data) })
         .then(function (r) { if (!r.ok) throw new Error(r.status); done(false); })
         .catch(function () { say('Sorry, that did not send. Please try again.'); track('abm_enquiry_error'); });
     } else {
-      var body = ['Space: ' + data.space, 'Name: ' + data.name, 'Email: ' + data.email, 'Phone: ' + data.phone,
-        'Event date: ' + data.date, 'Guests: ' + data.guests, 'Event type: ' + data.type, '', data.message,
+      var body = ['Space: ' + data.space, '',
+        'CONTACT DETAILS', 'Name: ' + data.name, 'Company: ' + data.company, 'Email: ' + data.email, 'Phone: ' + data.phone, '',
+        'EVENT DETAILS', 'Type of event: ' + data.type, 'Event date(s): ' + data.date, 'Approximate timings: ' + data.timing,
+        'Number of guests: ' + data.guests, 'Room set-up: ' + data.setup, 'Catering: ' + data.catering, 'Audio or visual: ' + data.av,
+        'Oval Hotel accommodation: ' + data.accommodation + (data.roomRequirements ? ' (' + data.roomRequirements + ')' : ''),
+        'How did you hear about us: ' + data.heardAbout, 'News and offers: ' + data.newsletter,
         '', '----------', LEAD_SOURCE, 'Tour: ' + data.page,
         'For any issues or enquiries about the tours, please contact michael@abmvisual.com'].join('\n');
       window.location.href = 'mailto:' + (enq.email || '') + '?subject=' + encodeURIComponent('Event enquiry: ' + data.space) + '&body=' + encodeURIComponent(body);
@@ -414,7 +469,7 @@
     '#abm-sp header{background:#009ddc;color:#fff;padding:16px 18px 14px;position:relative}',
     '#abm-sp h2{margin:0 30px 10px 0;font-size:20px;font-weight:900}',
     '#abm-sp-close{position:absolute;top:10px;right:12px;background:none;border:0;color:#fff;font-size:28px;line-height:1;cursor:pointer}',
-    '#abm-sp-q{width:100%;border:0;border-radius:22px;padding:11px 16px;font-size:16px;outline:none;box-sizing:border-box}',
+    '#abm-sp header .abm-sp-inputs{display:flex;gap:8px}#abm-sp-g{width:96px;flex:none;border:0;border-radius:22px;padding:11px 14px;font-size:16px;outline:none;box-sizing:border-box}#abm-sp-q{flex:1;min-width:0;width:100%;border:0;border-radius:22px;padding:11px 16px;font-size:16px;outline:none;box-sizing:border-box}',
     '#abm-sp-list{list-style:none;margin:0;padding:6px 10px 12px;overflow-y:auto}',
     '#abm-sp-list a{display:flex;align-items:center;gap:10px;padding:12px 8px;border-bottom:1px solid #e6e8ec;color:inherit;text-decoration:none;border-radius:8px}',
     '#abm-sp-list a:hover,#abm-sp-list a:focus-visible{background:#f0f8fd;outline:none}',
@@ -433,45 +488,84 @@
   ].join('');
   document.head.appendChild(spStyle);
   var CAPS = { banquet: 'Banquet', cabaret: 'Cabaret', cocktail: 'Cocktail', theatre: 'Theatre' };
+  // Tab-only memory: gone when the tab closes, never shared with other sites or tabs.
+  function tabGet(k) { try { return JSON.parse(sessionStorage.getItem(k)); } catch (e) { return null; } }
+  function tabSet(k, v) { try { sessionStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  // Recently viewed: this room goes to the front of the list.
+  var recent = (tabGet('abm_recent') || []).filter(function (x) { return x !== ALL.here && ALL.rooms[x]; });
+  if (ALL.here) tabSet('abm_recent', [ALL.here].concat(recent).slice(0, 6));
+
   var spBack = el('div', { id: 'abm-sp-backdrop', 'class': 'abm-ui' });
   var spBox = el('div', { id: 'abm-sp', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Other event spaces' });
   var spClose = el('button', { id: 'abm-sp-close', type: 'button', 'aria-label': 'Close', html: '&times;' });
   var spQ = el('input', { id: 'abm-sp-q', type: 'search', placeholder: 'Search event spaces', autocomplete: 'off', 'aria-label': 'Search event spaces' });
+  var spG = el('input', { id: 'abm-sp-g', type: 'number', min: '1', inputmode: 'numeric', placeholder: 'Guests', autocomplete: 'off', 'aria-label': 'How many guests?' });
   var spList = el('ul', { id: 'abm-sp-list' });
   var spNone = el('div', { id: 'abm-sp-none', text: 'No spaces match that search.' });
-  spBox.appendChild(el('header', {}, [spClose, el('h2', { text: 'Adelaide Oval 3D Tours' }), spQ]));
+  spBox.appendChild(el('header', {}, [spClose, el('h2', { text: 'Adelaide Oval 3D Tours' }), el('div', { 'class': 'abm-sp-inputs' }, [spQ, spG])]));
   spBox.appendChild(spList); spBox.appendChild(spNone);
   spBack.appendChild(spBox);
-  var spItems = [];
   var spKey = function (t) { return (t || '').toLowerCase().replace(/[^a-z0-9]/g, ''); };
+  var rooms = Object.keys(ALL.rooms).map(function (k) {
+    var r = ALL.rooms[k], c = r.capacity || {};
+    var max = Math.max.apply(null, Object.keys(CAPS).map(function (x) { return +c[x] || 0; }));
+    return { id: k, r: r, max: max, key: spKey(r.name) };
+  }).filter(function (x) { return x.r.tourUrl; }).sort(function (a, b) { return a.r.name.localeCompare(b.r.name); });
+
+  function capsText(r, guests) {
+    return Object.keys(CAPS).filter(function (k) { return r.capacity && r.capacity[k] && (!guests || +r.capacity[k] >= guests); })
+      .map(function (k) { return CAPS[k] + ' ' + r.capacity[k]; }).join(' \u00b7 ');
+  }
+  function spHead(t) { spList.appendChild(el('li', { 'class': 'abm-sp-head', text: t })); }
   function spRow(name, caps, url, cls, tag) {
     var a = el('a', { href: url, html: '<div class="t"><div class="n"></div>' + (caps ? '<div class="c"></div>' : '') + '</div><div class="g"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg>View</div>' });
     a.querySelector('.n').textContent = name;
     if (tag) a.querySelector('.n').insertAdjacentHTML('beforeend', '<span class="tag">' + tag + '</span>');
     if (caps) a.querySelector('.c').textContent = caps;
     a.addEventListener('click', function (e) {
-      e.preventDefault(); track('abm_space_switch', { to_space: name });
+      e.preventDefault(); track('abm_space_switch', { to_space: name, guests: spG.value || 'not set' });
       setTimeout(function () { window.location.href = url; }, 150);
     });
-    var li = el('li', { 'class': cls || '' }, [a]); spList.appendChild(li);
-    spItems.push({ li: li, key: spKey(name) });
+    spList.appendChild(el('li', { 'class': cls || '' }, [a]));
   }
-  Object.keys(ALL.rooms).map(function (k) { var r = ALL.rooms[k]; return { id: k, r: r }; })
-    .filter(function (x) { return x.r.tourUrl; })
-    .sort(function (a, b) { return a.r.name.localeCompare(b.r.name); })
-    .forEach(function (x) {
-      var caps = Object.keys(CAPS).filter(function (k) { return x.r.capacity && x.r.capacity[k]; })
-        .map(function (k) { return CAPS[k] + ' ' + x.r.capacity[k]; }).join(' \u00b7 ');
-      var here = x.id === ALL.here;
-      spRow(x.r.name, caps, x.r.tourUrl, here ? 'abm-sp-here' : '', here ? 'You are here' : '');
-    });
-  if (ALL.wholeVenue && ALL.wholeVenue.tourUrl) spRow(ALL.wholeVenue.name || 'Whole venue tour', 'Explore the whole of Adelaide Oval', ALL.wholeVenue.tourUrl, 'abm-sp-whole');
-  spQ.addEventListener('input', function () {
-    var t = spKey(spQ.value), n = 0;
-    spItems.forEach(function (it) { var ok = !t || it.key.indexOf(t) > -1; it.li.style.display = ok ? '' : 'none'; if (ok) n++; });
-    spNone.style.display = n ? 'none' : 'block';
+  function roomRow(x, guests) {
+    var here = x.id === ALL.here;
+    spRow(x.r.name, capsText(x.r, guests), x.r.tourUrl, here ? 'abm-sp-here' : '', here ? 'You are here' : '');
+  }
+  function renderSpaces() {
+    spList.innerHTML = '';
+    var t = spKey(spQ.value), g = parseInt(spG.value, 10) || 0;
+    var match = rooms.filter(function (x) { return !t || x.key.indexOf(t) > -1; });
+    var shown = 0;
+    if (g) {
+      var fit = match.filter(function (x) { return x.max >= g; }).sort(function (a, b) { return b.max - a.max; });
+      var ask = match.filter(function (x) { return !x.max; });
+      if (fit.length) { spHead('Fits ' + g + ' guests'); fit.forEach(function (x) { roomRow(x, g); }); }
+      if (ask.length) { spHead('Ask us about capacity'); ask.forEach(function (x) { roomRow(x, 0); }); }
+      shown = fit.length + ask.length;
+      spNone.textContent = 'No spaces fit ' + g + ' guests. Call our functions team and we will help.';
+    } else {
+      var rec = t ? [] : recent.slice(0, 3).map(function (id) { return rooms.filter(function (x) { return x.id === id; })[0]; }).filter(Boolean);
+      if (rec.length) { spHead('Recently viewed'); rec.forEach(function (x) { roomRow(x, 0); }); spHead('All event spaces'); }
+      match.forEach(function (x) { roomRow(x, 0); });
+      shown = match.length;
+      spNone.textContent = 'No spaces match that search.';
+    }
+    if (!t && ALL.wholeVenue && ALL.wholeVenue.tourUrl) spRow(ALL.wholeVenue.name || 'Whole venue tour', 'Explore the whole of Adelaide Oval', ALL.wholeVenue.tourUrl, 'abm-sp-whole');
+    spNone.style.display = shown ? 'none' : 'block';
+  }
+  spQ.addEventListener('input', renderSpaces);
+  var gTimer = null;
+  spG.addEventListener('input', function () {
+    renderSpaces();
+    clearTimeout(gTimer);
+    gTimer = setTimeout(function () { if (spG.value) track('abm_guest_filter', { guests: spG.value }); }, 1200);
+    var d = tabGet('abm_enq') || {}; d.guests = spG.value; tabSet('abm_enq', d);
+    var gf = document.getElementById('abm-f-guests'); if (gf && spG.value) gf.value = spG.value;
   });
-  function openSpaces() { spBack.classList.add('abm-open'); track('abm_spaces_open'); }
+  spG.value = (tabGet('abm_enq') || {}).guests || '';
+  renderSpaces();
+  function openSpaces() { renderSpaces(); spBack.classList.add('abm-open'); track('abm_spaces_open'); }
   function closeSpaces() { spBack.classList.remove('abm-open'); }
   spClose.addEventListener('click', closeSpaces);
   spBack.addEventListener('click', function (e) { if (e.target === spBack) closeSpaces(); });
@@ -548,6 +642,12 @@
     requestAnimationFrame(function () { moQueued = false; addMenuButton(); });
   }).observe(document.body, { childList: true, subtree: true });
   setTimeout(function () { if (!menuDone) spBtn.style.display = ''; }, 12000);
+  // When MPskin's menu is open, step our buttons and cards out of its way.
+  setInterval(function () {
+    var m = document.getElementById('abm-menu-spaces'), open = false;
+    if (m && m.offsetParent) { var r = m.getBoundingClientRect(); open = r.width > 0 && r.right > 0 && r.left < window.innerWidth - 4 && r.bottom > 0 && r.top < window.innerHeight; }
+    document.body.classList.toggle('abm-menu-open', open);
+  }, 400);
 
   var bar = el('div', { id: 'abm-quicklinks', 'class': 'abm-ui abm-slide', role: 'toolbar', 'aria-label': 'Quick links' },
     [spBtn, shareButton('', 'quicklinks'), enqBtn]);
