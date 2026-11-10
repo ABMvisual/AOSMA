@@ -256,10 +256,15 @@
     for (var i = 0; i < all.length; i++) {
       var m = all[i];
       if (m.closest && m.closest('.abm-ui')) continue;
-      if (/^\s*menu\s*$/i.test(m.textContent || '') && m.getBoundingClientRect().top < 20 && m.getBoundingClientRect().height > 0) { menuEl = m; }
+      if (/^[^a-z]*menu[^a-z]*$/i.test(m.textContent || '') && m.getBoundingClientRect().top < 20 && m.getBoundingClientRect().height > 0 && m.getBoundingClientRect().bottom < 90 && (!menuEl || m.getBoundingClientRect().bottom > menuEl.getBoundingClientRect().bottom)) { menuEl = m; }
     }
     if (menuEl) {
-      while (menuEl.parentNode && menuEl.parentNode !== document.body && /^\s*menu\s*$/i.test(menuEl.parentNode.textContent || '') && menuEl.parentNode.getBoundingClientRect().bottom < 90) menuEl = menuEl.parentNode;
+      // climb from the MENU label to the whole button box (small, at the very top)
+      while (menuEl.parentNode && menuEl.parentNode !== document.body) {
+        var pr = menuEl.parentNode.getBoundingClientRect();
+        if (pr.width > 320 || pr.top > 20 || pr.bottom > 90) break;
+        menuEl = menuEl.parentNode;
+      }
     }
     var mb = menuEl ? Math.round(menuEl.getBoundingClientRect().bottom) : 0;
     var h = mb >= 24 ? mb : Math.min(Math.round(g.bottom) || 0, 60) || bn.fallbackHeight || 44;
@@ -623,7 +628,7 @@
       oldIcon.parentNode.replaceChild(ic, oldIcon);
     }
     spot.parentNode.insertBefore(copy, spot);
-    menuDone = true; spBtn.style.display = 'none';
+    menuDone = true;
     return true;
   }
   // Catch the click before MPskin's own menu handlers can swallow it.
@@ -633,7 +638,6 @@
     e.preventDefault(); e.stopPropagation(); if (e.stopImmediatePropagation) e.stopImmediatePropagation();
     openSpaces();
   }, true);
-  spBtn.style.display = 'none';
   addMenuButton();
   // MPskin can rebuild its menu, so keep putting the section back if it disappears.
   var moQueued = false;
@@ -641,7 +645,6 @@
     if (moQueued) return; moQueued = true;
     requestAnimationFrame(function () { moQueued = false; addMenuButton(); });
   }).observe(document.body, { childList: true, subtree: true });
-  setTimeout(function () { if (!menuDone) spBtn.style.display = ''; }, 12000);
   // When MPskin's menu is open, step our buttons and cards out of its way.
   setInterval(function () {
     var m = document.getElementById('abm-menu-spaces'), open = false;
