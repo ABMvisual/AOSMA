@@ -65,6 +65,7 @@
     (kids || []).forEach(function (k) { if (k) n.appendChild(k); });
     return n;
   }
+  var SPACES_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.2 3.5l5.1 1.4-.9 4.6a3 3 0 0 1-3.6 2.3 3 3 0 0 1-2.2-3.6z"/><path d="M6.1 11.9l-1.3 6.4M2.6 17.6l4.4 1.2"/><path d="M19.8 3.5l-5.1 1.4.9 4.6a3 3 0 0 0 3.6 2.3 3 3 0 0 0 2.2-3.6z"/><path d="M17.9 11.9l1.3 6.4M21.4 17.6l-4.4 1.2"/><path d="M12 2v2M9.5 1.5l1 1.2M14.5 1.5l-1 1.2"/></svg>';
   var ICON = {
     share: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg>',
     download: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 21h16"/></svg>',
@@ -307,7 +308,7 @@
   ]);
   box.appendChild(topActions);
   var formSpaces = el('button', { type: 'button', 'class': 'abm-btn abm-light', 'aria-haspopup': 'dialog', style: 'width:100%;justify-content:center;margin:-6px 0 14px',
-    html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>View other event spaces' });
+    html: '' + SPACES_ICON + 'View other event spaces' });
   formSpaces.addEventListener('click', function () { closeEnquiry(); openSpaces(); track('abm_form_spaces'); });
   box.appendChild(formSpaces);
   box.appendChild(el('p', { 'class': 'abm-or', text: 'or make an enquiry' }));
@@ -420,8 +421,12 @@
     '#abm-sp-list .abm-sp-whole a{background:#0b2a4a;color:#fff;border:0;margin:4px 0 6px}',
     '#abm-sp-list .abm-sp-here a{background:#e8f5fc}',
     '#abm-sp-list .n{font-weight:700;font-size:15px}#abm-sp-list .c{font-size:13px;color:#6b7280;margin-top:2px}',
-    '#abm-sp-list .t{flex:1;min-width:0}#abm-sp-list .g{color:#009ddc;font-size:22px;line-height:1}',
-    '#abm-sp-list .abm-sp-whole .g{color:#fff}',
+    '#abm-sp-list .t{flex:1;min-width:0}',
+    '#abm-sp-list .g{flex:none;display:flex;align-items:center;gap:6px;background:#009ddc;color:#fff;border-radius:18px;padding:7px 12px 7px 10px;font-size:13px;font-weight:700}',
+    '#abm-sp-list .g svg{width:14px;height:14px}',
+    '#abm-sp-list a:hover .g{background:#0086bd}',
+    '#abm-sp-list .abm-sp-whole .g{background:#fff;color:#0b2a4a}',
+    '#abm-sp-list .abm-sp-head{font-size:12px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.08em;padding:14px 8px 4px}',
     '#abm-sp-list .tag{display:inline-block;margin-left:6px;padding:2px 8px;border-radius:10px;background:#009ddc;color:#fff;font-size:11px;vertical-align:2px}',
     '#abm-sp-none{padding:16px;color:#6b7280;display:none}',
     '.abm-short{display:none}@media (max-width:480px){.abm-long{display:none}.abm-short{display:inline}}'
@@ -440,7 +445,7 @@
   var spItems = [];
   var spKey = function (t) { return (t || '').toLowerCase().replace(/[^a-z0-9]/g, ''); };
   function spRow(name, caps, url, cls, tag) {
-    var a = el('a', { href: url, html: '<div class="t"><div class="n"></div>' + (caps ? '<div class="c"></div>' : '') + '</div><div class="g">&rsaquo;</div>' });
+    var a = el('a', { href: url, html: '<div class="t"><div class="n"></div>' + (caps ? '<div class="c"></div>' : '') + '</div><div class="g"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg>View</div>' });
     a.querySelector('.n').textContent = name;
     if (tag) a.querySelector('.n').insertAdjacentHTML('beforeend', '<span class="tag">' + tag + '</span>');
     if (caps) a.querySelector('.c').textContent = caps;
@@ -451,7 +456,6 @@
     var li = el('li', { 'class': cls || '' }, [a]); spList.appendChild(li);
     spItems.push({ li: li, key: spKey(name) });
   }
-  if (ALL.wholeVenue && ALL.wholeVenue.tourUrl) spRow(ALL.wholeVenue.name || 'Whole venue tour', 'Explore the whole Oval', ALL.wholeVenue.tourUrl, 'abm-sp-whole');
   Object.keys(ALL.rooms).map(function (k) { var r = ALL.rooms[k]; return { id: k, r: r }; })
     .filter(function (x) { return x.r.tourUrl; })
     .sort(function (a, b) { return a.r.name.localeCompare(b.r.name); })
@@ -461,6 +465,7 @@
       var here = x.id === ALL.here;
       spRow(x.r.name, caps, x.r.tourUrl, here ? 'abm-sp-here' : '', here ? 'You are here' : '');
     });
+  if (ALL.wholeVenue && ALL.wholeVenue.tourUrl) spRow(ALL.wholeVenue.name || 'Whole venue tour', 'Explore the whole of Adelaide Oval', ALL.wholeVenue.tourUrl, 'abm-sp-whole');
   spQ.addEventListener('input', function () {
     var t = spKey(spQ.value), n = 0;
     spItems.forEach(function (it) { var ok = !t || it.key.indexOf(t) > -1; it.li.style.display = ok ? '' : 'none'; if (ok) n++; });
@@ -472,7 +477,7 @@
   spBack.addEventListener('click', function (e) { if (e.target === spBack) closeSpaces(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && spBack.classList.contains('abm-open')) closeSpaces(); });
   var spBtn = el('button', { type: 'button', 'class': 'abm-btn', 'aria-haspopup': 'dialog',
-    html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span class="abm-long">Other spaces</span><span class="abm-short">Spaces</span>' });
+    html: '' + SPACES_ICON + '<span class="abm-long">Other spaces</span><span class="abm-short">Spaces</span>' });
   spBtn.addEventListener('click', openSpaces);
   window.abmOpenSpaces = openSpaces;
 
@@ -511,6 +516,18 @@
     if (copy.tagName === 'A') { copy.removeAttribute('href'); copy.removeAttribute('target'); }
     var label = (function f(n) { for (var i = 0; i < n.childNodes.length; i++) { var c = n.childNodes[i]; if (c.nodeType === 3 && /enquiry/i.test(c.nodeValue)) return c; if (c.nodeType === 1) { var r = f(c); if (r) return r; } } return null; })(copy);
     if (label) label.nodeValue = 'View other event spaces'; else copy.textContent = 'View other event spaces';
+    var oldIcon = copy.querySelector('svg, img, i');
+    var srcIcon = src.querySelector('svg, img, i');
+    if (oldIcon) {
+      var box = srcIcon ? srcIcon.getBoundingClientRect() : { width: 24, height: 24 };
+      var holder = document.createElement('span');
+      holder.innerHTML = SPACES_ICON;
+      var ic = holder.firstChild, sz = Math.round(Math.max(box.width, box.height)) || 24;
+      ic.setAttribute('width', sz); ic.setAttribute('height', sz);
+      ic.setAttribute('class', oldIcon.getAttribute('class') || '');
+      ic.style.cssText = 'flex:none;vertical-align:middle;' + (oldIcon.getAttribute('style') || '');
+      oldIcon.parentNode.replaceChild(ic, oldIcon);
+    }
     spot.parentNode.insertBefore(copy, spot);
     menuDone = true; spBtn.style.display = 'none';
     return true;
@@ -546,7 +563,7 @@
       shareButton('', 'info_card', 'Share this room'),
       (function () {
         var b = el('button', { type: 'button', 'class': 'abm-btn', 'aria-haspopup': 'dialog',
-          html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>View other event spaces' });
+          html: '' + SPACES_ICON + 'View other event spaces' });
         b.addEventListener('click', function () { openSpaces(); track('abm_card_spaces'); });
         return b;
       })()
