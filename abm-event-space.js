@@ -460,7 +460,26 @@
       track('generate_lead', { method: viaEmail ? 'email' : 'form', event_type: data.type || 'not set', guests: data.guests || 'not set', room_setup: data.setup || 'not set' });
       showThanks(viaEmail, data.firstName);
     };
-    if (enq.endpoint) {
+    if (enq.web3formsKey) {
+      // Web3Forms: sends the enquiry straight to the set inbox, no email app needed.
+      var payload = {
+        access_key: enq.web3formsKey,
+        subject: 'Event enquiry: ' + data.space + ' (3D virtual tour)',
+        from_name: 'Adelaide Oval 3D virtual tours',
+        replyto: data.email,
+        'Space': data.space, 'Name': data.name, 'Company': data.company, 'Email': data.email, 'Phone': data.phone,
+        'Type of event': data.type, 'Event date(s)': data.date, 'Approximate timings': data.timing,
+        'Number of guests': data.guests, 'Room set-up': data.setup, 'Catering': data.catering, 'Audio or visual': data.av,
+        'Oval Hotel accommodation': data.accommodation + (data.roomRequirements ? ' (' + data.roomRequirements + ')' : ''),
+        'How did you hear about us': data.heardAbout, 'News and offers': data.newsletter,
+        'Tour': data.page, 'Lead source': LEAD_SOURCE,
+        'Tour support': 'For any issues or enquiries about the tours, please contact michael@abmvisual.com'
+      };
+      fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) })
+        .then(function (r) { return r.json(); })
+        .then(function (j) { if (!j || !j.success) throw new Error('not sent'); done(false); })
+        .catch(function () { say('Sorry, that did not send. Please try again or call us.'); track('abm_enquiry_error'); });
+    } else if (enq.endpoint) {
       fetch(enq.endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(data) })
         .then(function (r) { if (!r.ok) throw new Error(r.status); done(false); })
         .catch(function () { say('Sorry, that did not send. Please try again.'); track('abm_enquiry_error'); });
@@ -671,7 +690,7 @@
   }, 400);
 
   var bar = el('div', { id: 'abm-quicklinks', 'class': 'abm-ui abm-slide', role: 'toolbar', 'aria-label': 'Quick links' },
-    [spBtn, shareButton('', 'quicklinks'), enqBtn]);
+    [shareButton('', 'quicklinks'), enqBtn, spBtn]);
 
   /* ---------- 2. Room info card ---------- */
   var infoEnq = el('button', { type: 'button', 'class': 'abm-btn abm-primary', html: ICON.enquire + 'Make an enquiry' });
