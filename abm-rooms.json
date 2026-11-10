@@ -5,7 +5,8 @@
     "enquiry": {
       "endpoint": "",
       "email": "michael@abmvisual.com",
-      "phone": "(08) 8211 1100"
+      "phone": "(08) 8211 1100",
+      "web3formsKey": "2905948d-7fc6-4dc7-970a-d0664ef10dfe"
     },
     "_enquiry_note": "email is set to michael@abmvisual.com for TESTING. Change to functions@adelaideoval.com.au before handover.",
     "popupDelaySeconds": 45,
