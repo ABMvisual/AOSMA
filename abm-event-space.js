@@ -32,7 +32,7 @@
     var d = cfg.defaults || {};
     window.ABM_ALL = { rooms: cfg.rooms || {}, wholeVenue: cfg.wholeVenue || null, here: id };
     window.ABM_SPACE = {
-      name: room.name, video: room.video || d.video || '', captions: room.video ? (room.captions || '') : (room.captions || d.captions || ''), factSheet: room.factSheet || '',
+      name: room.name, video: room.video || d.video || '', captions: room.video ? (room.captions || '') : (room.captions || d.captions || ''), factSheet: room.factSheet || '', menu: room.menu || d.menu || '',
       shareUrl: room.shareUrl || d.shareUrl || '', creditLogo: d.creditLogo || '',
       enquiry: Object.assign({}, d.enquiry || {}, room.enquiry || {}),
       popupDelaySeconds: room.popupDelaySeconds || d.popupDelaySeconds || 45,
@@ -179,6 +179,12 @@
     return a;
   }
 
+  function menuButton(cls, source, label) {
+    var a = el('a', { 'class': 'abm-btn ' + (cls || ''), href: S.menu, target: '_blank', rel: 'noopener', html: ICON.download + (label || 'Download our menus') });
+    a.addEventListener('click', function () { track('abm_menu_download', { source: source }); });
+    return a;
+  }
+
   /* ---------- tucking cards ---------- */
   function makeCard(id, label, children) {
     var card = el('div', { id: id, 'class': 'abm-ui abm-card', role: 'region', 'aria-label': label });
@@ -317,10 +323,12 @@
   box.appendChild(el('h2', { id: 'abm-enq-title', text: 'Planning an event in ' + (S.name || 'this space') + '?' }));
   box.appendChild(el('p', { 'class': 'abm-sub', text: S.factSheet
     ? 'Download our fact sheet, share this room with your team, or make an enquiry here.'
+    : S.menu ? 'Share this room with your team, browse our menus, or make an enquiry here.'
     : 'Share this room with your team, or make an enquiry here.' }));
   var topActions = el('div', { 'class': 'abm-top-actions' }, [
     S.factSheet ? downloadButton('abm-primary', 'form', 'Fact sheet') : null,
-    shareButton(S.factSheet ? 'abm-light' : 'abm-primary', 'form', 'Share this room')
+    shareButton(S.factSheet ? 'abm-light' : 'abm-primary', 'form', 'Share this room'),
+    S.menu ? menuButton('abm-light', 'form', 'Menus') : null
   ]);
   box.appendChild(topActions);
   var formSpaces = el('button', { type: 'button', 'class': 'abm-btn abm-light', 'aria-haspopup': 'dialog', style: 'width:100%;justify-content:center;margin:-6px 0 14px',
@@ -704,6 +712,7 @@
       S.factSheet ? downloadButton('abm-primary', 'info_card') : null,
       S.factSheet ? null : infoEnq,
       shareButton('', 'info_card', 'Share this room'),
+      S.menu ? menuButton('', 'info_card') : null,
       (function () {
         var b = el('button', { type: 'button', 'class': 'abm-btn', 'aria-haspopup': 'dialog',
           html: '' + SPACES_ICON + 'View other event spaces' });
