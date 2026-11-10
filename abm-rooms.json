@@ -4,7 +4,7 @@
     "creditLogo": "https://abmvisual.github.io/AOSMA/abm-visual-logo.png",
     "enquiry": {
       "endpoint": "",
-      "email": "michael@abmvisual.com",
+      "email": "functions@adelaideoval.com.au",
       "phone": "(08) 8211 1100",
       "web3formsKey": "2905948d-7fc6-4dc7-970a-d0664ef10dfe"
     },
@@ -15,7 +15,8 @@
       "fallbackHeight": 44
     },
     "video": "https://abmvisual.github.io/AOSMA/event-spaces-instructions.mp4",
-    "captions": "https://abmvisual.github.io/AOSMA/event-spaces-instructions.vtt"
+    "captions": "https://abmvisual.github.io/AOSMA/event-spaces-instructions.vtt",
+    "menu": "https://abmvisual.github.io/AOSMA/functions-menu.pdf"
   },
   "tours": {
     "d2tbhg98w7": "william-magarey-room",
