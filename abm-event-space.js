@@ -475,6 +475,8 @@
         'Tour': data.page, 'Lead source': LEAD_SOURCE,
         'Tour support': 'For any issues or enquiries about the tours, please contact michael@abmvisual.com'
       };
+      // leave out anything the visitor didn't fill in, so the email only shows real answers
+      Object.keys(payload).forEach(function (k) { if (payload[k] === '' || payload[k] === ' ()') delete payload[k]; });
       fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) })
         .then(function (r) { return r.json(); })
         .then(function (j) { if (!j || !j.success) throw new Error('not sent'); done(false); })
