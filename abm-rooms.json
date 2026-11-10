@@ -13,7 +13,9 @@
     "banner": {
       "style": "centre",
       "fallbackHeight": 44
-    }
+    },
+    "video": "https://abmvisual.github.io/AOSMA/event-spaces-instructions.mp4",
+    "captions": "https://abmvisual.github.io/AOSMA/event-spaces-instructions.vtt"
   },
   "tours": {
     "d2tbhg98w7": "william-magarey-room",
@@ -52,8 +54,8 @@
   "rooms": {
     "bodyline-bar": {
       "name": "Bodyline Bar",
-      "video": "https://abmvisual.github.io/AOSMA/bodyline-bar-intro.mp4",
-      "captions": "https://abmvisual.github.io/AOSMA/bodyline-bar-intro.vtt",
+      "video": "",
+      "captions": "",
       "factSheet": "",
       "capacity": {
         "cocktail": 160
