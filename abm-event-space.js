@@ -464,8 +464,9 @@
       // Web3Forms: sends the enquiry straight to the set inbox, no email app needed.
       var payload = {
         access_key: enq.web3formsKey,
-        subject: 'Event enquiry: ' + data.space + ' (3D virtual tour)',
-        from_name: 'Adelaide Oval 3D virtual tours',
+        subject: 'Event enquiry: ' + data.space + ', via ABM visual 3D virtual tours',
+        from_name: 'ABM visual 3D virtual tours',
+        'Lead from': 'Adelaide Oval 3D virtual tours by ABM visual',
         replyto: data.email,
         'Space': data.space, 'Name': data.name, 'Company': data.company, 'Email': data.email, 'Phone': data.phone,
         'Type of event': data.type, 'Event date(s)': data.date, 'Approximate timings': data.timing,
@@ -494,7 +495,7 @@
         'How did you hear about us: ' + data.heardAbout, 'News and offers: ' + data.newsletter,
         '', '----------', LEAD_SOURCE, 'Tour: ' + data.page,
         'For any issues or enquiries about the tours, please contact michael@abmvisual.com'].join('\n');
-      window.location.href = 'mailto:' + (enq.email || '') + '?subject=' + encodeURIComponent('Event enquiry: ' + data.space) + '&body=' + encodeURIComponent(body);
+      window.location.href = 'mailto:' + (enq.email || '') + '?subject=' + encodeURIComponent('Event enquiry: ' + data.space + ', via ABM visual 3D virtual tours') + '&body=' + encodeURIComponent(body);
       done(true);
     }
   });
